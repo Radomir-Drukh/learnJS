@@ -1,15 +1,22 @@
-import {FC, MouseEventHandler} from "react";
+import {FC, MouseEventHandler} from 'react';
+import {useAppSelector} from '../../../redux/hooks';
 
 interface TabProps {
-  title: string;
-  isActive: boolean;
-  onClick: MouseEventHandler;
+    id: string;
+    isActive: boolean;
+    onClick: MouseEventHandler;
 }
 
-export const Tab = ({title, isActive, onClick}: TabProps) => {
-  return (
-    <button onClick={onClick} disabled={isActive}>
-      {title}
-    </button>
-  );
+export const Tab = ({id, isActive, onClick}: TabProps) => {
+    const restaurant = useAppSelector((store) => store.restaurants.entities[id]);
+
+    if (!restaurant) {
+        return null;
+    }
+
+    return (
+        <button onClick={onClick} disabled={isActive}>
+            {restaurant.name}
+        </button>
+    );
 };

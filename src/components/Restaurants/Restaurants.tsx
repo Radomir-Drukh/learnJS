@@ -1,30 +1,27 @@
 import {useState} from 'react';
 import {Restaurant} from '../Restaurant/Restaurant';
 
-import {restaurants} from '../../constants/mock';
 import {RestaurantsTabs} from '../RestaurantsTabs/RestaurantsTabs';
 import styles from './Restaurants.module.scss';
+import {useAppSelector} from '../../redux/hooks';
 
-const initialRestaurantIndex = Number(localStorage.getItem('currentRestaurantIndex'));
+const initialRestaurantId = localStorage.getItem('currentRestaurantId');
 
 export const Restaurants = () => {
-    const [currentRestaurantIndex, setRestaurantIndex] = useState(initialRestaurantIndex);
+    const alternativeInitialId = useAppSelector((store) => store.restaurants.ids[0]);
+    const [currentRestaurantId, setRestaurantId] = useState(
+        initialRestaurantId ?? alternativeInitialId,
+    );
 
-    const currentRestaurant = restaurants[currentRestaurantIndex];
-
-    const onTabClickHandler = (index: number) => {
-        setRestaurantIndex(index);
-        localStorage.setItem('currentRestaurantIndex', `${index}`);
+    const onTabClickHandler = (id: string) => {
+        setRestaurantId(id);
+        localStorage.setItem('currentRestaurantId', `${id}`);
     };
 
     return (
         <div className={styles.container}>
-            <RestaurantsTabs
-                restaurants={restaurants}
-                currentIndex={currentRestaurantIndex}
-                onTabClick={onTabClickHandler}
-            />
-            {currentRestaurant && <Restaurant restaurant={currentRestaurant} />}
+            <RestaurantsTabs currentId={currentRestaurantId} onTabClick={onTabClickHandler} />
+            <Restaurant restaurantId={currentRestaurantId} />
         </div>
     );
 };

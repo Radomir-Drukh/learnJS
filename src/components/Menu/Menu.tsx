@@ -1,25 +1,28 @@
-import {FC} from "react";
-import {Meal} from "../Meal/Meal";
-import {EmptyList} from "../EmptyList/EmptyList";
-import {MealInterface} from "../../types/meal.models";
-import styles from "./Menu.module.scss";
-import classNames from "classnames";
+import classNames from 'classnames';
+import {useAppSelector} from '../../redux/hooks';
+import {EmptyList} from '../EmptyList/EmptyList';
+import {Meal} from '../Meal/Meal';
+import styles from './Menu.module.scss';
 
 interface MenuProps {
-  menu: MealInterface[];
+    dishesIds: string[];
 }
 
-export const Menu: FC<MenuProps> = ({menu}) => (
-  <div className={classNames(styles.root)}>
-    <h3>Меню</h3>
-    {menu?.length ? (
-      <ul className={classNames(styles.menuList)}>
-        {menu.map((item, index) => (
-          <Meal key={index} meal={item} />
-        ))}
-      </ul>
-    ) : (
-      <EmptyList entity="меню" />
-    )}
-  </div>
-);
+export const Menu = ({dishesIds}: MenuProps) => {
+    const menuItems = useAppSelector((store) => dishesIds.map((id) => store.dishes.entities[id]));
+
+    return (
+        <div className={classNames(styles.root)}>
+            <h3>Меню</h3>
+            {menuItems?.length ? (
+                <ul className={classNames(styles.menuList)}>
+                    {menuItems.map((item, index) => (
+                        <Meal key={item.id} meal={item} />
+                    ))}
+                </ul>
+            ) : (
+                <EmptyList entity="меню" />
+            )}
+        </div>
+    );
+};

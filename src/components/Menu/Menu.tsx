@@ -9,15 +9,13 @@ interface MenuProps {
 }
 
 export const Menu = ({dishesIds}: MenuProps) => {
-    const menuItems = useAppSelector((store) => dishesIds.map((id) => store.dishes.entities[id]));
-
     return (
         <div className={classNames(styles.root)}>
             <h3>Меню</h3>
-            {menuItems?.length ? (
+            {dishesIds?.length ? (
                 <ul className={classNames(styles.menuList)}>
-                    {menuItems.map((item, index) => (
-                        <Meal key={item.id} meal={item} />
+                    {dishesIds.map((item, index) => (
+                        <Meal key={item + index} mealID={item} />
                     ))}
                 </ul>
             ) : (

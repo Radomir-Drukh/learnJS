@@ -1,42 +1,35 @@
-import {FC, useState} from "react";
-import {Button} from "../Button/Button";
+import {useCount} from '../../../hooks/counter';
+import {Button} from '../Button/Button';
 
 interface CounterProps {
-  amount: number;
-  increment: () => void;
-  decrement: () => void;
-  min: number;
-  max: number;
+    min: number;
+    max: number;
 }
 
-export const Counter: FC<CounterProps> = ({
-  amount,
-  increment,
-  decrement,
-  min,
-  max,
-}) => {
-  const increase = () => {
-    if (amount === max) {
-      return;
-    }
+export const Counter = ({min, max}: CounterProps) => {
+    const {amount, increment, decrement} = useCount();
 
-    increment();
-  };
+    const increase = () => {
+        if (amount === max) {
+            return;
+        }
 
-  const decrease = () => {
-    if (amount === min) {
-      return;
-    }
+        increment();
+    };
 
-    decrement();
-  };
+    const decrease = () => {
+        if (amount === min) {
+            return;
+        }
 
-  return (
-    <div>
-      <Button onClick={decrease}>-</Button>
-      <span> {amount} </span>
-      <Button onClick={increase}>+</Button>
-    </div>
-  );
+        decrement();
+    };
+
+    return (
+        <div>
+            <Button onClick={decrease}>-</Button>
+            <span> {amount} </span>
+            <Button onClick={increase}>+</Button>
+        </div>
+    );
 };

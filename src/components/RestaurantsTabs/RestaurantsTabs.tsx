@@ -1,22 +1,22 @@
-import {FC} from 'react';
+import {useAppSelector} from '../../redux/hooks';
 import {Tab} from '../common/Tab/Tab';
-import {RestaurantInterface} from '../../types/restaurant.models';
 
 interface RestaurantsTabsProps {
-    restaurants: RestaurantInterface[];
-    currentIndex: number;
-    onTabClick: (index: number) => void;
+    currentId: string;
+    onTabClick: (index: string) => void;
 }
 
-export const RestaurantsTabs = ({restaurants, onTabClick, currentIndex}: RestaurantsTabsProps) => {
+export const RestaurantsTabs = ({onTabClick, currentId}: RestaurantsTabsProps) => {
+    const restaurantsIds = useAppSelector((state) => state.restaurants.ids);
+
     return (
         <div>
-            {restaurants.map((restaurant, index) => (
+            {restaurantsIds.map((restaurantId) => (
                 <Tab
-                    key={index}
-                    title={restaurant.name}
-                    isActive={index === currentIndex}
-                    onClick={() => onTabClick(index)}
+                    key={restaurantId}
+                    id={restaurantId}
+                    isActive={currentId === restaurantId}
+                    onClick={() => onTabClick(restaurantId)}
                 />
             ))}
         </div>

@@ -11,5 +11,5 @@ export const ReviewUser = ({userId}: ReviewUserProps) => {
         return null;
     }
 
-    return <span>{user.name}</span>;
+    return <>{user.name}</>;
 };

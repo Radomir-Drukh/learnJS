@@ -3,6 +3,7 @@ import {Reviews} from '../Reviews/Reviews';
 
 import {useAppSelector} from '../../redux/hooks';
 import styles from './Restaurant.module.scss';
+import {useEffect} from 'react';
 
 interface RestaurantProps {
     restaurantId: string;
@@ -19,7 +20,7 @@ export const Restaurant = ({restaurantId}: RestaurantProps) => {
         <div className={styles.root}>
             <h2>{restaurant.name}</h2>
             <Menu dishesIds={restaurant.menu} />
-            <Reviews reviewsIds={restaurant.reviews} />
+            <Reviews restaurantId={restaurantId} reviewsIds={restaurant.reviews} />
         </div>
     );
 };

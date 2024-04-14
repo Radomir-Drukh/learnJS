@@ -1,8 +1,10 @@
-import {combineSlices, configureStore} from '@reduxjs/toolkit';
-import {dishesSlice, restaurantsSlice, reviewsSlice, usersSlice} from './slices';
+import {combineSlices, configureStore, createEntityAdapter} from '@reduxjs/toolkit';
+import {dishesSlice, restaurantsSlice, reviewsSlice, usersSlice} from './slices/entities';
+import {cartSlice} from './slices/ui/cart';
 
 export const store = configureStore({
-    reducer: combineSlices(reviewsSlice, dishesSlice, restaurantsSlice, usersSlice),
+    reducer: combineSlices(reviewsSlice, dishesSlice, restaurantsSlice, usersSlice, cartSlice),
+    // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

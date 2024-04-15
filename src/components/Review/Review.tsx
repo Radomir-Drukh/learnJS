@@ -1,11 +1,21 @@
-import {FC} from 'react';
-import {ReviewInterface} from '../../types/review.models';
-import {normalizedReviews} from '../../constants/normalized-mock';
+import {useAppSelector} from '../../redux/hooks';
+import {ReviewUser} from '../ReviewUser/ReviewUser';
 
 interface ReviewProps {
-    review: (typeof normalizedReviews)[number];
+    reviewId: string;
 }
 
-export const Review = ({review}: ReviewProps) => {
-    return <li>{review.text}</li>;
+export const Review = ({reviewId}: ReviewProps) => {
+    const review = useAppSelector((store) => store.reviews.entities[reviewId]);
+
+    if (!review) {
+        return null;
+    }
+
+    return (
+        <li>
+            <ReviewUser userId={review.userId} />
+            {` - ${review.rating}* - ${review.text}`}
+        </li>
+    );
 };

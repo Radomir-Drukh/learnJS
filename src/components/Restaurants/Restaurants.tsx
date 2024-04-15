@@ -3,15 +3,9 @@ import {Restaurant} from '../Restaurant/Restaurant';
 
 import {RestaurantsTabs} from '../RestaurantsTabs/RestaurantsTabs';
 import styles from './Restaurants.module.scss';
-import {useAppSelector} from '../../redux/hooks';
-
-const initialRestaurantId = localStorage.getItem('currentRestaurantId');
 
 export const Restaurants = () => {
-    const alternativeInitialId = useAppSelector((store) => store.restaurants.ids[0]);
-    const [currentRestaurantId, setRestaurantId] = useState(
-        initialRestaurantId ?? alternativeInitialId,
-    );
+    const [currentRestaurantId, setRestaurantId] = useState<string | undefined>();
 
     const onTabClickHandler = (id: string) => {
         setRestaurantId(id);
@@ -21,7 +15,7 @@ export const Restaurants = () => {
     return (
         <div className={styles.container}>
             <RestaurantsTabs currentId={currentRestaurantId} onTabClick={onTabClickHandler} />
-            <Restaurant restaurantId={currentRestaurantId} />
+            {currentRestaurantId && <Restaurant restaurantId={currentRestaurantId} />}
         </div>
     );
 };

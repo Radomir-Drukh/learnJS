@@ -2,7 +2,7 @@ import {useAppSelector} from '../../redux/hooks';
 import {Tab} from '../common/Tab/Tab';
 
 interface RestaurantsTabsProps {
-    currentId: string;
+    currentId: string | undefined;
     onTabClick: (index: string) => void;
 }
 
